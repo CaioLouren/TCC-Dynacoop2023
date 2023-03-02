@@ -9,9 +9,11 @@
     <Import_RootNamespace>TCC.Dynacoop2023.SharedProject</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Controller\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Extensions\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Model\" />
     <Folder Include="$(MSBuildThisFileDirectory)VO\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Controller\ProdutoController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ExtensionClass1.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Produto.cs" />
   </ItemGroup>
 </Project>
