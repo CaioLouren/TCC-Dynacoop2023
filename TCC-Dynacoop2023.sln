@@ -3,11 +3,42 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCC.Dynacoop2023.ConsoleApplication", "TCC.Dynacoop2023.ConsoleApplication\TCC.Dynacoop2023.ConsoleApplication.csproj", "{0A104200-05ED-4CAB-9466-774E924EB200}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCC.Dynacoop2023.Customizations", "TCC.Dynacoop2023.Customizations\TCC.Dynacoop2023.Customizations.csproj", "{3249BF9F-13F7-4F99-BE17-C00A733E280C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCC.Dynacoop2023.MyPlugins", "TCC.Dynacoop2023.MyPlugins\TCC.Dynacoop2023.MyPlugins.csproj", "{1F1E8BC2-F424-4A71-8F1C-CB28EF82D8B9}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TCC.Dynacoop2023.SharedProject", "TCC.Dynacoop2023.SharedProject\TCC.Dynacoop2023.SharedProject.shproj", "{4078F14E-1C6E-4DB3-811A-698ED6D422EF}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0A104200-05ED-4CAB-9466-774E924EB200}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A104200-05ED-4CAB-9466-774E924EB200}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A104200-05ED-4CAB-9466-774E924EB200}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A104200-05ED-4CAB-9466-774E924EB200}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3249BF9F-13F7-4F99-BE17-C00A733E280C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3249BF9F-13F7-4F99-BE17-C00A733E280C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3249BF9F-13F7-4F99-BE17-C00A733E280C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3249BF9F-13F7-4F99-BE17-C00A733E280C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F1E8BC2-F424-4A71-8F1C-CB28EF82D8B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F1E8BC2-F424-4A71-8F1C-CB28EF82D8B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F1E8BC2-F424-4A71-8F1C-CB28EF82D8B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F1E8BC2-F424-4A71-8F1C-CB28EF82D8B9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F1B86200-5FBC-4DD1-A85C-C5A9EF6E5F1C}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		TCC.Dynacoop2023.SharedProject\TCC.Dynacoop2023.SharedProject.projitems*{0a104200-05ed-4cab-9466-774e924eb200}*SharedItemsImports = 4
+		TCC.Dynacoop2023.SharedProject\TCC.Dynacoop2023.SharedProject.projitems*{1f1e8bc2-f424-4a71-8f1c-cb28ef82d8b9}*SharedItemsImports = 4
+		TCC.Dynacoop2023.SharedProject\TCC.Dynacoop2023.SharedProject.projitems*{4078f14e-1c6e-4db3-811a-698ed6d422ef}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal
