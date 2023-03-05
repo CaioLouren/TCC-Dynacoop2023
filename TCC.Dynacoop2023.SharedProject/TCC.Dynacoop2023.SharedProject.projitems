@@ -14,10 +14,12 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Controller\ContaController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\ContactController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controller\OportunidadeController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\ProdutoController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ExtensionClass1.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Conta.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Contato.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Oportunidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Produto.cs" />
   </ItemGroup>
 </Project>

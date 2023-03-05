@@ -138,21 +138,15 @@
   <ItemGroup>
     <Compile Include="Plugins2\Environment2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TccISV2\PluginCore.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Actions2\" />
-    <Folder Include="TccISV2\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="KeyFile2.snk" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TCC.Dynacoop2023.MyPlugins\TCC.Dynacoop2023.Environment1.csproj">
-      <Project>{1f1e8bc2-f424-4a71-8f1c-cb28ef82d8b9}</Project>
-      <Name>TCC.Dynacoop2023.Environment1</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

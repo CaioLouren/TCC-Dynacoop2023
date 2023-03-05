@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TCC.Dynacoop2023.Environment1.ConctionFactory;
 using TCC.Dynacoop2023.MyPlugins.TccISV;
 
 namespace TCC.Dynacoop2023.Environment2.Plugins2

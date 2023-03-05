@@ -18,9 +18,6 @@ C:\Estudos\TCC-Dynacoop2023\TCC.Dynacoop2023.Environment2\bin\Debug\System.Text.
 C:\Estudos\TCC-Dynacoop2023\TCC.Dynacoop2023.Environment2\bin\Debug\System.Text.Json.dll
 C:\Estudos\TCC-Dynacoop2023\TCC.Dynacoop2023.Environment2\bin\Debug\System.Threading.Tasks.Extensions.dll
 C:\Estudos\TCC-Dynacoop2023\TCC.Dynacoop2023.Environment2\bin\Debug\System.ValueTuple.dll
-C:\Estudos\TCC-Dynacoop2023\TCC.Dynacoop2023.Environment2\bin\Debug\TCC.Dynacoop2023.MyPlugins.dll
-C:\Estudos\TCC-Dynacoop2023\TCC.Dynacoop2023.Environment2\bin\Debug\TCC.Dynacoop2023.MyPlugins.pdb
-C:\Estudos\TCC-Dynacoop2023\TCC.Dynacoop2023.Environment2\bin\Debug\TCC.Dynacoop2023.MyPlugins.dll.config
 C:\Estudos\TCC-Dynacoop2023\TCC.Dynacoop2023.Environment2\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
 C:\Estudos\TCC-Dynacoop2023\TCC.Dynacoop2023.Environment2\bin\Debug\Microsoft.Crm.Sdk.Proxy.xml
 C:\Estudos\TCC-Dynacoop2023\TCC.Dynacoop2023.Environment2\bin\Debug\Microsoft.IdentityModel.Clients.ActiveDirectory.xml
