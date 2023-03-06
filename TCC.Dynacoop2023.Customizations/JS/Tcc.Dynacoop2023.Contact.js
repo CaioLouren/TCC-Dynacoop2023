@@ -12,7 +12,7 @@ Tcc.Contact = {
 
         var cpf = formContext.getAttribute("dyn1_cpf").getValue();
 
-        if (cpf != null) {
+        if (cpf != null && this.ValidaCpf(executionContext) != false) {
             if (cpf.length == 11) {
                 var formattedCPF = cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
                 var id = Xrm.Page.data.entity.getId();
@@ -38,56 +38,74 @@ Tcc.Contact = {
                 );
             }
             else {
-                Tcc.Contact.DynamicsAlert("O CPF digitado não é valido", "CPF inválido!")
+                Tcc.Contact.DynamicsAlert("O CPF digitado está incorreto", "CPF inválido!")
             }
         } else {
             Tcc.Contact.DynamicsAlert("Informe um valor para o CPF", "CPF incorreto!")
         }
     },
-    ValidaCpf: function (executionContext)
-    {
+    ValidaCpf: function (executionContext) {
+        var formContext = executionContext.getFormContext();
 
-        ValidaCPF.valida = function () {
-            if (typeof this.cpfLimpo === 'undefined') return false;
-            if (this.cpfLimpo.length !== 11) return false;
-            if (this.isSequencia()) return false;
+        var cpf = formContext.getAttribute("dyn1_cpf").getValue();
 
-            const cpfParcial = this.cpfLimpo.slice(0, -2);
-            const digito1 = this.criaDigito(cpfParcial);
-            const digito2 = this.criaDigito(cpfParcial + digito1);
-
-            const novoCpf = cpfParcial + digito1 + digito2;
-
-            return novoCpf === this.cpfLimpo;
-        };
-
-        ValidaCPF.prototype.criaDigito = function (cpfParcial) {
-            const cpfArray = Array.from(cpfParcial);
-
-            let regressivo = cpfArray.length + 1;
-            const total = cpfArray.reduce((ac, val) => {
-                ac += (regressivo * Number(val));
-                regressivo--;
-                return ac;
-            }, 0);
-
-            const digito = 11 - (total % 11);
-            return digito > 9 ? '0' : String(digito);
-        };
-
-        ValidaCPF.prototype.isSequencia = function () {
-            const sequencia = this.cpfLimpo[0].repeat(this.cpfLimpo.length);
-            return sequencia === this.cpfLimpo;
-        };
-
-        const cpf = new ValidaCPF('705.484.450-52');
-
-        if (cpf.valida()) {
-            console.log('Cpf válido');
+        var soma;
+        var resto;
+        soma = 0;
+        if (!cpf ||
+            cpf.length != 11 ||
+            cpf == "00000000000" ||
+            cpf == "11111111111" ||
+            cpf == "22222222222" ||
+            cpf == "33333333333" ||
+            cpf == "44444444444" ||
+            cpf == "55555555555" ||
+            cpf == "66666666666" ||
+            cpf == "77777777777" ||
+            cpf == "88888888888" ||
+            cpf == "99999999999")
+        {
+            formContext.getAttribute("dyn1_cpf").setValue(null);
+            return false
         }
-        else {
-            console.log('Cpf inválido');
+
+        for (i = 1; i <= 9; i++) {
+            soma = soma + parseInt(cpf.substring(i - 1, i)) * (11 - i);
         }
+
+        resto = soma % 11;
+
+        if (resto == 10 || resto == 11 || resto < 2) {
+            resto = 0;
+        } else {
+            resto = 11 - resto;
+        }
+
+        if (resto != parseInt(cpf.substring(9, 10))) {
+            formContext.getAttribute("dyn1_cpf").setValue(null);
+            return false;
+        }
+
+        soma = 0;
+
+        for (i = 1; i <= 10; i++) {
+            soma = soma + parseInt(cpf.substring(i - 1, i)) * (12 - i);
+        }
+        resto = soma % 11;
+
+        if (resto == 10 || resto == 11 || resto < 2) {
+            resto = 0;
+        } else {
+            resto = 11 - resto;
+        }
+
+        if (resto != parseInt(cpf.substring(10, 11))) {
+            formContext.getAttribute("dyn1_cpf").setValue(null);
+            return false;
+        }
+
+        return true;
+
     },
     DynamicsAlert: function (alertText, alertTitle) {
         var alertStrings = {
