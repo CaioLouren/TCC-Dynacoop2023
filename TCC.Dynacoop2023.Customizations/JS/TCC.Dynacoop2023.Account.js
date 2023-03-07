@@ -50,8 +50,7 @@ Tcc.Account = {
         var name = formContext.getAttribute("name").getValue();
         var formattedName = name.toLowerCase().replace(/(?:^|\s)(?!da|de|do)\S/g, l => l.toUpperCase());;
 
-        if (name != null)
-        {
+        if (name != null) {
             formContext.getAttribute("name").setValue(formattedName);
         }
 
@@ -71,8 +70,7 @@ Tcc.Account = {
             cnpj == "66666666666666" ||
             cnpj == "77777777777777" ||
             cnpj == "88888888888888" ||
-            cnpj == "99999999999999")
-        {
+            cnpj == "99999999999999") {
             formContext.getAttribute("dyn1_cnpj").setValue(null);
             return false;
         }
@@ -88,8 +86,7 @@ Tcc.Account = {
                 pos = 9;
         }
         resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-        if (resultado != digitos.charAt(0))
-        {
+        if (resultado != digitos.charAt(0)) {
             formContext.getAttribute("dyn1_cnpj").setValue(null);
             return false;
         }
@@ -104,8 +101,7 @@ Tcc.Account = {
                 pos = 9;
         }
         resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-        if (resultado != digitos.charAt(1))
-        {
+        if (resultado != digitos.charAt(1)) {
             formContext.getAttribute("dyn1_cnpj").setValue(null);
             return false;
         }
@@ -113,19 +109,56 @@ Tcc.Account = {
         return true;
 
     },
-    DynamicsAlert: function (alertText, alertTitle)
-    {
+    OnChangeCEP: function (executionContext) {
+
+        const formContext = typeof executionContext.getFormContext === "function" ? executionContext.getFormContext() : executionContext;
+        const cep = formContext.getAttribute("dyn1_cep").getValue();
+        var parameters = {};
+        parameters.cep = cep;
+
+        var req = new XMLHttpRequest();
+        req.open("POST", Xrm.Utility.getGlobalContext().getClientUrl() + "/api/data/v9.2/dyn1_BuscaCEP", true);
+        req.setRequestHeader("OData-MaxVersion", "4.0");
+        req.setRequestHeader("OData-Version", "4.0");
+        req.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+        req.setRequestHeader("Accept", "application/json");
+        req.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                req.onreadystatechange = null;
+                if (this.status === 200 || this.status === 204) {
+                    var result = JSON.parse(this.response);
+                    console.log(result);
+                    var dadoscep = JSON.parse(result["DadosCep"]);
+                    Tcc.Logistics.preencheCamposEndereco(formContext, dadoscep);
+                } else {
+                    console.log(this.responseText);
+                }
+            }
+        };
+        req.send(JSON.stringify(parameters));
+    },
+    CamposEndereco: function (formContext, dadosCep) {
+
+        formContext.getAttribute('dyn1_logradouro').setValue(dadosCep.logradouro);
+        formContext.getAttribute('dyn1_complemento').setValue(dadosCep.localidade);
+        formContext.getAttribute('dyn1_uf').setValue(dadosCep.uf);
+        formContext.getAttribute('dyn1_bairro').setValue(dadosCep.bairro);
+        formContext.getAttribute('dyn1_codigoibge').setValue(dadosCep.ibge);
+        formContext.getAttribute('dyn1_ddd').setValue(dadosCep.ddd);
+
+    },
+    DynamicsAlert: function (alertText, alertTitle) {
         var alertStrings = {
-        confirmButtonLabel: "OK",
-        text: alertText,
-        title: alertTitle
-    };
+            confirmButtonLabel: "OK",
+            text: alertText,
+            title: alertTitle
+        };
 
-    var alertOptions = {
-        height: 120,
-        width: 200
-    };
+        var alertOptions = {
+            height: 120,
+            width: 200
+        };
 
-    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
+        Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
     }
 }
