@@ -37,15 +37,5 @@ namespace TCC.Dynacoop2023.SharedProject.Controller
         {
             return Oportunidade.GeraIdUnico();
         }
-
-        public string NumeroAleatorio(int tamanho)
-        {
-            return Oportunidade.NumeroAleatorio(tamanho);
-        }
-
-        public string LetraAleatorio(int tamanho)
-        {
-            return Oportunidade.LetraAleatorio(tamanho);
-        }
     }
 }

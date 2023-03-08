@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TCC.Dynacoop2023.Environment1.ConctionFactory;
 using TCC.Dynacoop2023.MyPlugins.TccISV;
+using TCC.Dynacoop2023.SharedProject.Controller;
 
 namespace TCC.Dynacoop2023.MyPlugins.Plugins
 {
@@ -15,8 +16,9 @@ namespace TCC.Dynacoop2023.MyPlugins.Plugins
         {
             Entity prod = (Entity)this.Context.InputParameters["Target"];
             prod.Attributes["tcc2_integracao"] = true;
-            IOrganizationService organizationService = ConectionFactory.organizationService();
-            organizationService.Create(prod);
+            ProdutoController produtoController = new ProdutoController(this.Service);
+
+            produtoController.CopiaProduto(prod);
         }
     }
 }

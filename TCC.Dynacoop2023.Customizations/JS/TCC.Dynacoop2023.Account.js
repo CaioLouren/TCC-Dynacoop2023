@@ -139,6 +139,7 @@ Tcc.Account = {
     },
     CamposEndereco: function (formContext, dadosCep) {
 
+        formContext.getAttribute('dyn1_cep').setValue(dadosCep.cep.replace(/(\d{5})(\d{3})/, "$1-$2"));
         formContext.getAttribute('dyn1_logradouro').setValue(dadosCep.logradouro);
         formContext.getAttribute('dyn1_complemento').setValue(dadosCep.localidade);
         formContext.getAttribute('dyn1_uf').setValue(dadosCep.uf);

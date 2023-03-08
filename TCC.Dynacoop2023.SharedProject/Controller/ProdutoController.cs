@@ -14,7 +14,7 @@ namespace TCC.Dynacoop2023.SharedProject.Controller
     public class ProdutoController
     {
         public IOrganizationService ServiceClient { get; set; }
-        public Produto Produto  { get; set; }
+        public Produto Produto { get; set; }
 
         public ProdutoController(IOrganizationService crmServiceCliente)
         {
@@ -26,6 +26,11 @@ namespace TCC.Dynacoop2023.SharedProject.Controller
         {
             ServiceClient = crmServiceCliente;
             this.Produto = new Produto(ServiceClient);
+        }
+
+        public void CopiaProduto(Entity target)
+        {
+            Produto.CopiaProduto(target);
         }
     }
 }

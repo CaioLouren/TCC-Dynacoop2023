@@ -17,7 +17,7 @@ namespace TCC.Dynacoop2023.MyPlugins.Plugins
             Entity oportunidade = (Entity)this.Context.InputParameters["Target"];
             OportunidadeController oportunidadeController = new OportunidadeController(this.Service);
             string IdUnico = oportunidadeController.GeraIdUnico();
-            if (oportunidadeController.GetOpportunityByIdUnico(IdUnico) != null)
+            while (oportunidadeController.GetOpportunityByIdUnico(IdUnico) != null)
             {
                  IdUnico = oportunidadeController.GeraIdUnico();
             }

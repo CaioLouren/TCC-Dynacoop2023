@@ -56,7 +56,7 @@ namespace TCC.Dynacoop2023.SharedProject.Model
             return idUnico;
         }
 
-        public string NumeroAleatorio(int tamanho)
+        private string NumeroAleatorio(int tamanho)
         {
             string numero = "0123456789";
             var random = new Random();
@@ -64,7 +64,7 @@ namespace TCC.Dynacoop2023.SharedProject.Model
             return resultado;
         }
 
-        public string LetraAleatorio(int tamanho)
+        private string LetraAleatorio(int tamanho)
         {
             string numero = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             var random = new Random();
