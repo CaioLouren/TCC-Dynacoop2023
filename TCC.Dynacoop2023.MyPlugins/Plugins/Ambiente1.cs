@@ -18,7 +18,7 @@ namespace TCC.Dynacoop2023.MyPlugins.Plugins
             prod.Attributes["tcc2_integracao"] = true;
             ProdutoController produtoController = new ProdutoController(this.Service);
 
-            produtoController.CopiaProduto(prod);
+            produtoController.CriaProdAmb2(prod);
         }
     }
 }

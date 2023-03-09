@@ -15,30 +15,11 @@ Tcc.Account = {
         if (cnpj != null && this.ValidaCnpj(executionContext) != false) {
             if (cnpj.length == 14) {
                 var formattedCNPJ = cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
-                var id = Xrm.Page.data.entity.getId();
-
-                var queryAccountId = "";
-
-                if (id.length > 0) {
-                    queryAccountId += " and accountid ne " + id;
-                }
-
-                Xrm.WebApi.online.retrieveMultipleRecords("account", "?$select=name&$filter=dyn1_cnpj eq '" + formattedCNPJ + "'" + queryAccountId).then(
-                    function success(results) {
-                        if (results.entities.length == 0) {
-                            formContext.getAttribute("dyn1_cnpj").setValue(formattedCNPJ);
-                        } else {
-                            formContext.getAttribute("dyn1_cnpj").setValue("");
-                            Tcc.Account.DynamicsAlert("O CNPJ já existe no sistema", "CNPJ duplicado!")
-                        }
-                    },
-                    function (error) {
-                        Tcc.Account.DynamicsAlert("Por favor contato o administrador", "Erro do sistema")
-                    }
-                );
+                formContext.getAttribute("dyn1_cnpj").setValue(formattedCNPJ);
             }
             else {
                 Tcc.Account.DynamicsAlert("O CNPJ digitado não é valido", "CNPJ inválido!")
+                formContext.getAttribute("dyn1_cnpj").setValue(null);
             }
         } else {
             Tcc.Account.DynamicsAlert("Informe um CNPJ válido", "CNPJ incorreto!")
@@ -110,43 +91,49 @@ Tcc.Account = {
 
     },
     OnChangeCEP: function (executionContext) {
+        var formContext = executionContext.getFormContext();
+        var cep = formContext.getAttribute("dyn1_cep").getValue();
+        if (cep != null) {
+            var execute_dyn1_BuscaCEP_Request = {
+                // Parameters
+                entity: { entityType: "account", id: formContext.data.entity.getId().replace("{", "").replace("}", "") }, // entity
+                Cep: cep, // Edm.String
 
-        const formContext = typeof executionContext.getFormContext === "function" ? executionContext.getFormContext() : executionContext;
-        const cep = formContext.getAttribute("dyn1_cep").getValue();
-        var parameters = {};
-        parameters.cep = cep;
-
-        var req = new XMLHttpRequest();
-        req.open("POST", Xrm.Utility.getGlobalContext().getClientUrl() + "/api/data/v9.2/dyn1_BuscaCEP", true);
-        req.setRequestHeader("OData-MaxVersion", "4.0");
-        req.setRequestHeader("OData-Version", "4.0");
-        req.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-        req.setRequestHeader("Accept", "application/json");
-        req.onreadystatechange = function () {
-            if (this.readyState === 4) {
-                req.onreadystatechange = null;
-                if (this.status === 200 || this.status === 204) {
-                    var result = JSON.parse(this.response);
-                    console.log(result);
-                    var dadoscep = JSON.parse(result["DadosCep"]);
-                    Tcc.Logistics.preencheCamposEndereco(formContext, dadoscep);
-                } else {
-                    console.log(this.responseText);
+                getMetadata: function () {
+                    return {
+                        boundParameter: "entity",
+                        parameterTypes: {
+                            entity: { typeName: "mscrm.account", structuralProperty: 5 },
+                            Cep: { typeName: "Edm.String", structuralProperty: 1 }
+                        },
+                        operationType: 0, operationName: "dyn1_BuscaCEP"
+                    };
                 }
-            }
-        };
-        req.send(JSON.stringify(parameters));
-    },
-    CamposEndereco: function (formContext, dadosCep) {
+            };
 
-        formContext.getAttribute('dyn1_cep').setValue(dadosCep.cep.replace(/(\d{5})(\d{3})/, "$1-$2"));
-        formContext.getAttribute('dyn1_logradouro').setValue(dadosCep.logradouro);
-        formContext.getAttribute('dyn1_complemento').setValue(dadosCep.localidade);
-        formContext.getAttribute('dyn1_uf').setValue(dadosCep.uf);
-        formContext.getAttribute('dyn1_bairro').setValue(dadosCep.bairro);
-        formContext.getAttribute('dyn1_codigoibge').setValue(dadosCep.ibge);
-        formContext.getAttribute('dyn1_ddd').setValue(dadosCep.ddd);
+            Xrm.WebApi.execute(execute_dyn1_BuscaCEP_Request).then(
+                function success(response) {
+                    if (response.ok) { return response.json(); }
+                }
+            ).then(function (responseBody) {
+                var result = responseBody;
+                console.log(result);
+                // Return Type: mscrm.dyn1_BuscaCEPResponse
+                // Output Parameters
+                var dadoscep = JSON.parse(result.responseBody);
 
+                FormContext.getAttribute('dyn1_cep').setValue(dadoscep.cep.replace(/(\d{5})(\d{3})/, "$1-$2"));
+                formContext.getAttribute('dyn1_logradouro').setValue(dadosCep.logradouro);
+                formContext.getAttribute('dyn1_complemento').setValue(dadosCep.localidade);
+                formContext.getAttribute('dyn1_uf').setValue(dadosCep.uf);
+                formContext.getAttribute('dyn1_bairro').setValue(dadosCep.bairro);
+                formContext.getAttribute('dyn1_codigoibge').setValue(dadosCep.ibge);
+                formContext.getAttribute('dyn1_ddd').setValue(dadosCep.ddd);
+
+            }).catch(function (error) {
+                console.log(error.message);
+            });
+        }
     },
     DynamicsAlert: function (alertText, alertTitle) {
         var alertStrings = {

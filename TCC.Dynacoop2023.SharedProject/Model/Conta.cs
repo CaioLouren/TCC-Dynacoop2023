@@ -45,7 +45,7 @@ namespace TCC.Dynacoop2023.SharedProject.Model
             if (accounts.Entities.Count() > 0)
                 return accounts.Entities.FirstOrDefault();
             else
-                Console.WriteLine("Nenhuma conta encontrada com esse cpf");
+                Console.WriteLine("Nenhuma conta encontrada com esse cnpj");
 
             return null;
         }

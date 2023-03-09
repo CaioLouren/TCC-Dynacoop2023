@@ -28,9 +28,9 @@ namespace TCC.Dynacoop2023.SharedProject.Controller
             this.Produto = new Produto(ServiceClient);
         }
 
-        public void CopiaProduto(Entity target)
+        public void CriaProdAmb2(Entity target)
         {
-            Produto.CopiaProduto(target);
+            Produto.CriaProdAmb2(target);
         }
     }
 }

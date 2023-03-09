@@ -37,5 +37,20 @@ namespace TCC.Dynacoop2023.SharedProject.Controller
         {
             return Oportunidade.GeraIdUnico();
         }
+
+        public string[] getIgnoreFields()
+        {
+            return Oportunidade.getIgnoreFields();
+        }
+        public EntityReference ValidaLookup(KeyValuePair<string, object> value, IOrganizationService service, IOrganizationService service2)
+        {
+            return Oportunidade.ValidaLookup(value, service, service2);
+        }
+        public void AtribuiOpp(Entity oportunidade, Entity oppAmbiente2, IOrganizationService organizationService, OportunidadeController oportunidadeController)
+        {
+            Oportunidade.AtribuiOpp(oportunidade, oppAmbiente2, organizationService, oportunidadeController);
+        }
+
+
     }
 }

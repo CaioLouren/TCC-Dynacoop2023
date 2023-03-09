@@ -15,30 +15,11 @@ Tcc.Contact = {
         if (cpf != null && this.ValidaCpf(executionContext) != false) {
             if (cpf.length == 11) {
                 var formattedCPF = cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-                var id = Xrm.Page.data.entity.getId();
-
-                var queryContactId = "";
-
-                if (id.length > 0) {
-                    queryContactId += " and contactid ne " + id;
-                }
-
-                Xrm.WebApi.online.retrieveMultipleRecords("contact", "?$select=firstname&$filter=dyn1_cpf eq '" + formattedCPF + "'" + queryContactId).then(
-                    function success(results) {
-                        if (results.entities.length == 0) {
-                            formContext.getAttribute("dyn1_cpf").setValue(formattedCPF);
-                        } else {
-                            formContext.getAttribute("dyn1_cpf").setValue("");
-                            Tcc.Contact.DynamicsAlert("O CPF já existe no sistema", "CPF duplicado!")
-                        }
-                    },
-                    function (error) {
-                        Tcc.Contact.DynamicsAlert("Por favor contato o administrador", "Erro do sistema")
-                    }
-                );
+                formContext.getAttribute("dyn1_cpf").setValue(formattedCPF);
             }
             else {
                 Tcc.Contact.DynamicsAlert("O CPF digitado está incorreto", "CPF inválido!")
+                formContext.getAttribute("dyn1_cnpj").setValue(null);
             }
         } else {
             Tcc.Contact.DynamicsAlert("Informe um valor para o CPF", "CPF incorreto!")
@@ -63,8 +44,7 @@ Tcc.Contact = {
             cpf == "66666666666" ||
             cpf == "77777777777" ||
             cpf == "88888888888" ||
-            cpf == "99999999999")
-        {
+            cpf == "99999999999") {
             formContext.getAttribute("dyn1_cpf").setValue(null);
             return false
         }

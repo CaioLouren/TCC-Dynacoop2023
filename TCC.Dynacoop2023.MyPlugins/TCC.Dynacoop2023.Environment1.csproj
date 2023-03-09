@@ -79,7 +79,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="RestSharp, Version=108.0.3.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.108.0.3\lib\netstandard2.0\RestSharp.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Activities" />
@@ -158,7 +158,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions\BuscaCep.cs" />
-    <Compile Include="Plugins\ViaCep.cs" />
     <Compile Include="ConectionFactory\ConectionFactory.cs" />
     <Compile Include="Plugins\Ambiente1.cs" />
     <Compile Include="Plugins\ContaManager.cs" />

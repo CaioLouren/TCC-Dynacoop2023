@@ -31,13 +31,13 @@ namespace TCC.Dynacoop2023.SharedProject.Model
             this.Logicalname = "product";
         }
 
-        public void CopiaProduto(Entity target)
+        public void CriaProdAmb2(Entity target)
         {
             IOrganizationService serviceAmbienteDois = ConectionFactory.organizationService();
-            Entity produto = CopiaGrupoUnid(serviceAmbienteDois, target);
+            Entity produto = GrupoUnid(serviceAmbienteDois, target);
             serviceAmbienteDois.Create(produto);
         }
-        private Entity CopiaGrupoUnid(IOrganizationService serviceAmbDois, Entity product)
+        private Entity GrupoUnid(IOrganizationService serviceAmbDois, Entity product)
         {
             Entity productReturn = product;
             if (productReturn.Contains("defaultuomscheduleid") && productReturn.Contains("defaultuomid"))
