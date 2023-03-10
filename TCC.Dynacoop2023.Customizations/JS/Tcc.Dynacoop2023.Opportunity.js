@@ -15,6 +15,10 @@ Tcc.Opportunity = {
             );
         }
     },
+    OnChangeButton: function (primaryControl) {
+        var formContext = primaryControl;
+        alert("Clicou no botão");
+    },
     DynamicsAlert: function (alertText, alertTitle) {
         var alertStrings = {
             confirmButtonLabel: "OK",
