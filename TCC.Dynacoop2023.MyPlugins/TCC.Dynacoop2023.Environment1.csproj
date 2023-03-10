@@ -157,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions\BuscaCep.cs" />
+    <Compile Include="Actions\ClonaProposta.cs" />
     <Compile Include="ConectionFactory\ConectionFactory.cs" />
     <Compile Include="Plugins\Ambiente1.cs" />
     <Compile Include="Plugins\ContaManager.cs" />

@@ -114,29 +114,29 @@ Tcc.Account = {
             function success(response) {
                 if (response.ok) { return response.json(); }
             }
-        ).then(function (responseBody) {
-            var result = responseBody;
+        ).then(function (response) {
+            var result = response;
             console.log(result);
 
-            var logradouro = result["logradouro"];
+            var logradouro = result["Logradouro"];
             formContext.getAttribute('dyn1_logradouro').setValue(logradouro);
 
-            var complemento = result["complemento"];
+            var complemento = result["Complemento"];
             formContext.getAttribute('dyn1_complemento').setValue(complemento);
 
-            var uf = result["uf"];
+            var uf = result["Uf"];
             formContext.getAttribute('dyn1_uf').setValue(uf);
 
-            var bairro = result["bairro"];
+            var bairro = result["Bairro"];
             formContext.getAttribute('dyn1_bairro').setValue(bairro);
 
-            var ibge = result["ibge"];
+            var ibge = result["Ibge"];
             formContext.getAttribute('dyn1_codigoibge').setValue(ibge);
 
-            var ddd = result["ddd"];
+            var ddd = result["Ddd"];
             formContext.getAttribute('dyn1_ddd').setValue(ddd);
 
-            var localidade = result["localidade"];
+            var localidade = result["Localidade"];
             formContext.getAttribute('dyn1_localidade').setValue(localidade);
 
             formContext.data.save();

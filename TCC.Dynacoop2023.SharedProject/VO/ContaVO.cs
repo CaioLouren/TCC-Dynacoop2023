@@ -6,31 +6,27 @@ using System.Text;
 
 namespace TCC.Dynacoop2023.SharedProject.VO
 {
-    [JsonObject(MemberSerialization.OptIn)]
     public class ContaVO
     {
-        [JsonProperty(PropertyName = "cep")]
-        public string Cep { get; set; }
-
-        [JsonProperty(PropertyName = "logradouro")]
+        [JsonProperty("logradouro")]
         public string Logradouro { get; set; }
 
-        [JsonProperty(PropertyName = "localidade")]
+        [JsonProperty("localidade")]
         public string Localidade { get; set; }
 
-        [JsonProperty(PropertyName ="complemento")]
+        [JsonProperty("complemento")]
         public string Complemento { get; set; }
 
-        [JsonProperty(PropertyName = "uf")]
+        [JsonProperty("uf")]
         public string Uf { get; set; }
 
-        [JsonProperty(PropertyName = "bairro")]
+        [JsonProperty("bairro")]
         public string Bairro { get; set; }
 
-        [JsonProperty(PropertyName = "ibge")]
+        [JsonProperty("ibge")]
         public string Ibge { get; set; }
 
-        [JsonProperty(PropertyName = "ddd")]
+        [JsonProperty("ddd")]
         public string Ddd { get; set; }
     }
 }

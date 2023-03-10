@@ -7,14 +7,14 @@ using System.Text;
 
 namespace TCC.Dynacoop2023.SharedProject.Extensions
 {
-    //public partial class Product
+    //public partial class Conta
     //{
-    //    public static List<Product> FromJson(string json) => JsonConvert.DeserializeObject<List<Product>>(json, TCC.Dynacoop2023.SharedProject.Extensions.Converter.Settings);
+    //    public static List<Conta> FromJson(string json) => JsonConvert.DeserializeObject<List<Conta>>(json, TCC.Dynacoop2023.SharedProject.Extensions.Converter.Settings);
     //}
 
     //public static class Serialize
     //{
-    //    public static string ToJson(this List<Product> self) => JsonConvert.SerializeObject(self, TCC.Dynacoop2023.SharedProject.Extensions.Converter.Settings);
+    //    public static string ToJson(this List<Conta> self) => JsonConvert.SerializeObject(self, TCC.Dynacoop2023.SharedProject.Extensions.Converter.Settings);
     //}
 
     //internal static class Converter

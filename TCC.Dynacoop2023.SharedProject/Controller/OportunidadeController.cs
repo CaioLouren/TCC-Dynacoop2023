@@ -50,7 +50,10 @@ namespace TCC.Dynacoop2023.SharedProject.Controller
         {
             Oportunidade.AtribuiOpp(oportunidade, oppAmbiente2, organizationService, oportunidadeController);
         }
-
+        public Entity GetOpportunityById(Guid id)
+        {
+            return Oportunidade.GetOpportunityById(id);
+        }
 
     }
 }

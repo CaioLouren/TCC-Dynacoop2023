@@ -181,6 +181,14 @@ namespace TCC.Dynacoop2023.SharedProject.Model
             return RetrieveOneOpportunity(queryOpportunity);
         }
 
+        public Entity GetOpportunityById(Guid id)
+        {
+            QueryExpression queryOpportunity = new QueryExpression(this.Logicalname);
+            queryOpportunity.ColumnSet = new ColumnSet { AllColumns = true };
+            queryOpportunity.Criteria.AddCondition("opportunityid", ConditionOperator.Equal, id);
+            return RetrieveOneOpportunity(queryOpportunity);
+        }
+
         private Entity RetrieveOneOpportunity(QueryExpression queryAccount)
         {
             EntityCollection accounts = this.ServiceClient.RetrieveMultiple(queryAccount);

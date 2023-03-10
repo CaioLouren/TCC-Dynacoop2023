@@ -19,5 +19,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\Oportunidade.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Produto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)VO\ContaVO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)VO\OportunidadeVO.cs" />
   </ItemGroup>
 </Project>

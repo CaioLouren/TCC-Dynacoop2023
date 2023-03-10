@@ -48,8 +48,7 @@ namespace TCC.Dynacoop2023.MyPlugins.Actions
                 this.Log += "Entrou no processo";
 
                 RestResponse response = GetDadosCEPOnAPI(context);
-                ContaVO contaFound = GetAccountWithID(context, response);
-
+                ContaVO contaFound = JsonConvert.DeserializeObject<ContaVO>(response.Content);
 
                 this.Log += "Setando valor";
 
@@ -68,33 +67,6 @@ namespace TCC.Dynacoop2023.MyPlugins.Actions
             }
 
         }
-
-        private ContaVO GetAccountWithID(CodeActivityContext context, RestResponse response)
-        {
-            this.Log += "GetAccountWithID";
-
-            this.Log += response.Content;
-            List<ContaVO> contaVO = JsonConvert.DeserializeObject<List<ContaVO>>(response.Content);
-
-            try
-            {
-                var contaFound = (from c in contaVO 
-                                  where c.Cep == Cep.Get(context)
-                                  select c).ToList().FirstOrDefault();
-
-                if (contaFound == null)
-                {
-                    throw new Exception("Conta com esse CEP não encontrado");
-                }
-
-                return contaFound;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Não foi possivel ler o Parametro do Cep da Conta");
-            }
-        }
-
 
         private RestResponse GetDadosCEPOnAPI(CodeActivityContext context)
         {
