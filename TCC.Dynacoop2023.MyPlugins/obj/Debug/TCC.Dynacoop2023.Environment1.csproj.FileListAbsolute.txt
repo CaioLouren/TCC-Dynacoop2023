@@ -156,3 +156,5 @@ C:\Estudos\TCC-Dynacoop2023\TCC-Dynacoop2023\TCC.Dynacoop2023.MyPlugins\bin\Debu
 C:\Estudos\TCC-Dynacoop2023\TCC-Dynacoop2023\TCC.Dynacoop2023.MyPlugins\bin\Debug\Newtonsoft.Json.xml
 C:\Estudos\TCC-Dynacoop2023\TCC-Dynacoop2023\TCC.Dynacoop2023.MyPlugins\bin\Debug\RestSharp.dll
 C:\Estudos\TCC-Dynacoop2023\TCC-Dynacoop2023\TCC.Dynacoop2023.MyPlugins\bin\Debug\RestSharp.xml
+C:\Estudos\TCC-Dynacoop2023\TCC-Dynacoop2023\TCC.Dynacoop2023.MyPlugins\bin\Debug\System.Text.Json.dll
+C:\Estudos\TCC-Dynacoop2023\TCC-Dynacoop2023\TCC.Dynacoop2023.MyPlugins\bin\Debug\System.Text.Json.xml

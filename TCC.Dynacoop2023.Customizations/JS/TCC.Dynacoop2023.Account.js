@@ -86,55 +86,64 @@ Tcc.Account = {
             formContext.getAttribute("dyn1_cnpj").setValue(null);
             return false;
         }
-
         return true;
-
     },
     OnChangeCEP: function (executionContext) {
         var formContext = executionContext.getFormContext();
         var cep = formContext.getAttribute("dyn1_cep").getValue();
-        if (cep != null) {
-            var execute_dyn1_BuscaCEP_Request = {
-                // Parameters
-                entity: { entityType: "account", id: formContext.data.entity.getId().replace("{", "").replace("}", "") }, // entity
-                Cep: cep, // Edm.String
+        var id = formContext.data.entity.getId();
 
-                getMetadata: function () {
-                    return {
-                        boundParameter: "entity",
-                        parameterTypes: {
-                            entity: { typeName: "mscrm.account", structuralProperty: 5 },
-                            Cep: { typeName: "Edm.String", structuralProperty: 1 }
-                        },
-                        operationType: 0, operationName: "dyn1_BuscaCEP"
-                    };
-                }
-            };
+        var execute_dyn1_BuscaCEP_Request = {
+            // Parameters
+            entity: { entityType: "account", id: id }, // entity
+            Cep: cep,
 
-            Xrm.WebApi.execute(execute_dyn1_BuscaCEP_Request).then(
-                function success(response) {
-                    if (response.ok) { return response.json(); }
-                }
-            ).then(function (responseBody) {
-                var result = responseBody;
-                console.log(result);
-                // Return Type: mscrm.dyn1_BuscaCEPResponse
-                // Output Parameters
-                var dadoscep = JSON.parse(result.responseBody);
+            getMetadata: function () {
+                return {
+                    boundParameter: "entity",
+                    parameterTypes: {
+                        entity: { typeName: "mscrm.account", structuralProperty: 5 },
+                        Cep: { typeName: "Edm.String", structuralProperty: 1 }
+                    },
+                    operationType: 0, operationName: "dyn1_BuscaCEP"
+                };
+            }
+        };
 
-                FormContext.getAttribute('dyn1_cep').setValue(dadoscep.cep.replace(/(\d{5})(\d{3})/, "$1-$2"));
-                formContext.getAttribute('dyn1_logradouro').setValue(dadosCep.logradouro);
-                formContext.getAttribute('dyn1_complemento').setValue(dadosCep.localidade);
-                formContext.getAttribute('dyn1_uf').setValue(dadosCep.uf);
-                formContext.getAttribute('dyn1_bairro').setValue(dadosCep.bairro);
-                formContext.getAttribute('dyn1_codigoibge').setValue(dadosCep.ibge);
-                formContext.getAttribute('dyn1_ddd').setValue(dadosCep.ddd);
+        Xrm.WebApi.online.execute(execute_dyn1_BuscaCEP_Request).then(
+            function success(response) {
+                if (response.ok) { return response.json(); }
+            }
+        ).then(function (responseBody) {
+            var result = responseBody;
+            console.log(result);
 
-            }).catch(function (error) {
-                console.log(error.message);
-            });
-        }
-    },
+            var logradouro = result["logradouro"];
+            formContext.getAttribute('dyn1_logradouro').setValue(logradouro);
+
+            var complemento = result["complemento"];
+            formContext.getAttribute('dyn1_complemento').setValue(complemento);
+
+            var uf = result["uf"];
+            formContext.getAttribute('dyn1_uf').setValue(uf);
+
+            var bairro = result["bairro"];
+            formContext.getAttribute('dyn1_bairro').setValue(bairro);
+
+            var ibge = result["ibge"];
+            formContext.getAttribute('dyn1_codigoibge').setValue(ibge);
+
+            var ddd = result["ddd"];
+            formContext.getAttribute('dyn1_ddd').setValue(ddd);
+
+            var localidade = result["localidade"];
+            formContext.getAttribute('dyn1_localidade').setValue(localidade);
+
+            formContext.data.save();
+    }).catch(function (error) {
+        console.log(error.message);
+    });
+},
     DynamicsAlert: function (alertText, alertTitle) {
         var alertStrings = {
             confirmButtonLabel: "OK",
