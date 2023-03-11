@@ -90,6 +90,35 @@ Tcc.Account = {
     },
     OnChangeCEP: function (executionContext) {
         var formContext = executionContext.getFormContext();
+
+        var cep = formContext.getAttribute("dyn1_cep").getValue().replace("-", "");
+        var url = "https://viacep.com.br/ws/" + cep + "/json/";
+
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", url, true);
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                var data = JSON.parse(xmlHttp.responseText);
+                if (data.erro) {
+                    Tcc.Account.DynamicsAlert("CEP não encontrado", "CEP INVÁLIDO");
+                } else {
+                    formContext.getAttribute("dyn1_logradouro").setValue(data.logradouro);
+                    formContext.getAttribute("dyn1_bairro").setValue(data.bairro);
+                    formContext.getAttribute("dyn1_localidade").setValue(data.localidade);
+                    formContext.getAttribute("dyn1_uf").setValue(data.uf);
+                    formContext.getAttribute("dyn1_complemento").setValue(data.complemento);
+                    formContext.getAttribute("dyn1_codigoibge").setValue(data.ibge);
+                    formContext.getAttribute("dyn1_ddd").setValue(data.ddd);
+                }
+            } else if (xmlHttp.readyState == 4 && xmlHttp.status != 200) {
+                Tcc.Account.DynamicsAlert("Erro ao buscar CEP", "ERROR");
+            }
+        };
+        xmlHttp.send(null);
+    },
+
+    /*CEP: function (executionContext) {
+        var formContext = executionContext.getFormContext();
         var cep = formContext.getAttribute("dyn1_cep").getValue();
         var id = formContext.data.entity.getId();
 
@@ -140,10 +169,11 @@ Tcc.Account = {
             formContext.getAttribute('dyn1_localidade').setValue(localidade);
 
             formContext.data.save();
-    }).catch(function (error) {
-        console.log(error.message);
-    });
-},
+        }).catch(function (error) {
+            console.log(error.message);
+        });
+    },*/
+
     DynamicsAlert: function (alertText, alertTitle) {
         var alertStrings = {
             confirmButtonLabel: "OK",

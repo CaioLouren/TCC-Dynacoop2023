@@ -16,77 +16,104 @@ Tcc.Opportunity = {
         }
     },
     OnChangeButton: function (primaryControl) {
+        debugger;
         var formContext = primaryControl;
-        //var formContext = typeof executionContext.getFormContext === "function" ? executionContext.getFormContext() : executionContext;
-        var idOpportunidade = formContext.data.entity.getId().replace("{", "").replace("}", "");
+        var data =
+        {
+            "name": formContext.getAttribute("name").getValue(),
+            "purchasetimeframe": formContext.getAttribute("purchasetimeframe").getValue(),
+            "budgetamount": formContext.getAttribute("budgetamount").getValue(),
+            "purchaseprocess": formContext.getAttribute("purchaseprocess").getValue(),
+            "msdyn_forecastcategory": formContext.getAttribute("msdyn_forecastcategory").getValue(),
+            "description": formContext.getAttribute("description").getValue(),
+            "currentsituation": formContext.getAttribute("currentsituation").getValue(),
+            "customerneed": formContext.getAttribute("customerneed").getValue(),
+            "proposedsolution": formContext.getAttribute("proposedsolution").getValue(),
+            "isrevenuesystemcalculated": formContext.getAttribute("isrevenuesystemcalculated").getValue(),
+            "totallineitemamount": formContext.getAttribute("totallineitemamount").getValue(),
+            "discountpercentage": formContext.getAttribute("discountpercentage").getValue(),
+            "discountamount": formContext.getAttribute("discountamount").getValue(),
+            "totalamountlessfreight": formContext.getAttribute("totalamountlessfreight").getValue(),
+            "freightamount": formContext.getAttribute("freightamount").getValue(),
+            "totaltax": formContext.getAttribute("totaltax").getValue(),
+            "totalamount": formContext.getAttribute("totalamount").getValue(),
+        }
 
-        // Obter o ID da oportunidade original a ser clonada
-        var originalOpportunityId = idOpportunidade;
+        if (formContext.getAttribute("parentcontactid").getValue() != null)
+            data["parentcontactid@odata.bind"] = "/contacts(" + formContext.getAttribute("parentcontactid").getValue()[0].id.replace("{", "").replace("}", "") + ")"
+        if (formContext.getAttribute("parentaccountid").getValue() != null)
+            data["parentaccountid@odata.bind"] = "/accounts(" + formContext.getAttribute("parentaccountid").getValue()[0].id.replace("{", "").replace("}", "") + ")"
+        if (formContext.getAttribute("transactioncurrencyid").getValue() != null)
+            data["transactioncurrencyid@odata.bind"] = "/transactioncurrencys(" + formContext.getAttribute("transactioncurrencyid").getValue()[0].id.replace("{", "").replace("}", "") + ")"
+        if (formContext.getAttribute("pricelevelid").getValue() != null)
+            data["pricelevelid@odata.bind"] = "/pricelevels(" + formContext.getAttribute("pricelevelid").getValue()[0].id.replace("{", "").replace("}", "") + ")"
 
-        // Criar uma nova entidade para a nova oportunidade
-        var clonedOpportunity = {
-            "name": "Nova oportunidade",
-            // adicione aqui outros campos que você queira clonar
-        };
+        Xrm.WebApi.createRecord("opportunity", data).then(
+            function success(result) {
+                var idNovaOpp = result.id;
 
-        // Criar um objeto de parâmetro para a Action personalizada
-        var parameters = {};
-        parameters["OriginalOpportunityId"] = originalOpportunityId;
-        parameters["ClonedOpportunity"] = clonedOpportunity;
+                var gridContext = formContext.getControl("opportunityproductsgrid");
 
-        // Chamar a Action personalizada para clonar a oportunidade
-        var req = new XMLHttpRequest();
-        req.open("POST", Xrm.Page.context.getClientUrl() + "/api/data/v9.1/dyn1_ClonaOpp", true);
-        req.setRequestHeader("OData-MaxVersion", "4.0");
-        req.setRequestHeader("OData-Version", "4.0");
-        req.setRequestHeader("Accept", "application/json");
-        req.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-        req.onreadystatechange = function () {
-            if (this.readyState === 4) {
-                req.onreadystatechange = null;
-                if (this.status === 204) {
-                    // A Action foi chamada com sucesso, você pode executar outras ações aqui se necessário
-                } else {
-                    // A Action falhou, você pode lidar com o erro aqui
-                }
-            }
-        };
-        req.send(JSON.stringify(parameters));
+                var myRows = gridContext.getGrid().getRows();
 
-        };
+                var RowCount = myRows.getLength();
 
-        Xrm.WebApi.online.execute(execute_new_ActionClonaOportunidadee_Request).then(
-            function success(response) {
-                if (response.ok) {
-                    console.log("Success");
-                    var alertStrings = { confirmButtonLabel: "Ok", text: "Uma nova oportunidade foi originada a partir do registro atual", title: "Oportunidade clonada" };
-                    var alertOptions = { height: 120, width: 260 };
-                    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(
-                        function (success) {
-                            console.log("Alert dialog closed");
+                for (var i = 0; i < RowCount; i++) {
+
+                    var gridRowData = myRows.get(i).getData();
+
+                    var entity = gridRowData.getEntity();
+
+                    var entityReference = entity.getEntityReference();
+
+                    var fetchXml = "?fetchXml=<fetch>" +
+                        "<entity name='opportunityproduct'>" +
+                        "<filter>" +
+                        "<condition attribute='opportunityproductid' operator='eq' value='" + entityReference.id.replace("{", "").replace("}", "") + "'/>" +
+                        "</filter>" +
+                        "</entity>" +
+                        "</fetch>";
+
+                    Xrm.WebApi.retrieveMultipleRecords("opportunityproduct", fetchXml).then(
+                        function success(result) {
+                            for (var i = 0; i < result.entities.length; i++) {
+                                var dataProd =
+                                {
+                                    "isproductoverridden": result.entities[i]["isproductoverridden"],
+                                    "ispriceoverridden": result.entities[i]["ispriceoverridden"],
+                                    "priceperunit": result.entities[i]["priceperunit"],
+                                    "volumediscountamount": result.entities[i]["volumediscountamount"],
+                                    "quantity": result.entities[i]["quantity"],
+                                    "baseamount": result.entities[i]["baseamount"],
+                                    "manualdiscountamount": result.entities[i]["manualdiscountamount"],
+                                    "tax": result.entities[i]["tax"],
+                                    "extendedamount": result.entities[i]["extendedamount"],
+                                }
+
+                                if (result.entities[i]["_productid_value"] != null)
+                                    dataProd["productid@odata.bind"] = "/products(" + result.entities[i]["_productid_value"].replace("{", "").replace("}", "") + ")"
+                                if (result.entities[i]["_uomid_value"] != null)
+                                    dataProd["uomid@odata.bind"] = "/uoms(" + result.entities[i]["_uomid_value"].replace("{", "").replace("}", "") + ")"
+                               
+                                dataProd["opportunityid@odata.bind"] = "/opportunitys(" + idNovaOpp.replace("{", "").replace("}", "") + ")"
+                                Xrm.WebApi.createRecord("opportunityproduct", dataProd);
+                            }
+
                         },
                         function (error) {
                             console.log(error.message);
+                            // handle error conditions
                         }
                     );
                 }
-                else {
-                    var alertStrings = { confirmButtonLabel: "Ok", text: "Erro ao clonar oportunidade", title: "Algo deu errado" };
-                    var alertOptions = { height: 120, width: 260 };
-                    Xrm.Navigation.openAlertDialog(alertStrings, alertOptions).then(
-                        function (success) {
-                            console.log("Alert dialog closed");
-                        },
-                        function (error) {
-                            console.log(error.message);
-                        }
-                    );
-                }
+            },
+            function (error) {
+                console.log(error.message);
+                // handle error conditions
             }
-        ).catch(function (error) {
-            console.log(error.message);
-        });
-        alert("Clicou no botão");
+        );
+        
+
     },
     DynamicsAlert: function (alertText, alertTitle) {
         var alertStrings = {
@@ -99,7 +126,6 @@ Tcc.Opportunity = {
             height: 120,
             width: 200
         };
-
         Xrm.Navigation.openAlertDialog(alertStrings, alertOptions);
     }
 }

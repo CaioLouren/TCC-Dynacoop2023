@@ -45,7 +45,7 @@ namespace TCC.Dynacoop2023.MyPlugins.Actions
         {
             try
             {
-                this.Log += "Entrou no processo";
+                this.Log += "Entrou no processo ";
 
                 RestResponse response = GetDadosCEPOnAPI(context);
                 ContaVO contaFound = JsonConvert.DeserializeObject<ContaVO>(response.Content);
